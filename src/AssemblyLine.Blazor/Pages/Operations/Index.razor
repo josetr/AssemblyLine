@@ -1,0 +1,40 @@
+@page "/operations"
+@inherits ContextComponentBase<ViewModels.Operations.IndexViewModel>;
+
+<PageTitle>Operations</PageTitle>
+
+<MudToolBar>
+    <MudText Typo="Typo.h5">Operations</MudText>
+    <MudSpacer />
+    <MudButton StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" OnClick="Model.OpenCreateOperationDialogAsync">Create</MudButton>
+</MudToolBar>
+
+<MudTable Items="Model.Operations" Hover="true">
+    <HeaderContent>
+        <MudTh>ID</MudTh>
+        <MudTh>Order</MudTh>
+        <MudTh>Operation</MudTh>
+        <MudTh>Device Name</MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Id">@context.Id</MudTd>
+        <MudTd DataLabel="Order">
+            <MudButton OnClick="(_ => Model.MoveOperationUpAsync(context))">
+                <MudIcon Icon="@Icons.Material.Filled.ArrowUpward" Size="Size.Small" />
+            </MudButton>
+            @context.Order
+            <MudButton OnClick="(_ => Model.MoveOperationDownAsync(context))">
+                <MudIcon Icon="@Icons.Material.Filled.ArrowDownward" Size="Size.Small" />
+            </MudButton>
+        </MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="Device">@context.Device?.Name</MudTd>
+        <MudTd>
+            <MudMenu Icon="@Icons.Material.Filled.MoreVert" Size="Size.Small" Dense="true">
+                <MudMenuItem OnClick="(_ => Model.OpenEditOperationDialogAsync(context))">Edit</MudMenuItem>
+                <MudMenuItem OnClick="(_ => Model.DeleteOperationAsync(context))">Delete</MudMenuItem>
+            </MudMenu>
+        </MudTd>
+    </RowTemplate>
+</MudTable>

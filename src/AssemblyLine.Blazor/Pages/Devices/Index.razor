@@ -1,0 +1,33 @@
+@page "/devices"
+@inherits ContextComponentBase<ViewModels.Devices.IndexViewModel>;
+
+<PageTitle>Devices</PageTitle>
+
+<MudToolBar>
+    <MudText Typo="Typo.h5">Devices</MudText>
+    <MudSpacer />
+    <MudButton StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" OnClick="Model.OpenCreateDeviceDialogAsync">Create</MudButton>
+</MudToolBar>
+
+<MudTable Items="Model.Devices" Hover="true" SortLabel="Sort By">
+    <HeaderContent>
+        <MudTh>
+            <MudTableSortLabel SortBy="((Device x) => x.Id)">ID</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortBy="((Device x) => x.Name)">Name</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortBy="((Device x) => x.Type)">Type</MudTableSortLabel>
+        </MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Id">@context.Id</MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="Type">@context.Type</MudTd>
+        <MudTd>
+            <MudButton StartIcon="@Icons.Material.Filled.Delete" OnClick="(_ => Model.DeleteDeviceAsync(context))" Style="color: red" Size="Size.Small">Delete</MudButton>
+        </MudTd>
+    </RowTemplate>
+</MudTable>

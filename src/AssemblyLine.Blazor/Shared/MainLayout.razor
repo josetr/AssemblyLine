@@ -1,0 +1,35 @@
+﻿@inherits LayoutComponentBase
+
+<MudLayout Style="display: flex; flex-direction: column; min-height: 100vh;">
+    <MudAppBar Elevation="1" Dense="true">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
+        <MudText>Assembly Line</MudText>
+        <MudSpacer />
+        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Size="Size.Medium" Color="Color.Inherit" Link="https://github.com/josetr" Target="_blank" />
+    </MudAppBar>
+
+    <MudDrawer @bind-Open="isNavigationMenuOpen" Elevation="1" ClipMode="DrawerClipMode.Docked">
+        <MudNavMenu>
+            <MudNavLink Match="NavLinkMatch.All" href="/" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+            <MudNavLink href="operations" Icon="@Icons.Material.Filled.List">Operations</MudNavLink>
+            <MudNavLink href="devices" Icon="@Icons.Material.Filled.DeviceHub">Devices</MudNavLink>
+        </MudNavMenu>
+    </MudDrawer>
+
+    <MudMainContent Class="pt-16 px-4">
+        @Body
+    </MudMainContent>
+
+    <footer>
+        <MudText>Copyright (C) 2021 Jose Torres</MudText>
+    </footer>
+</MudLayout>
+
+@code {
+    bool isNavigationMenuOpen = true;
+
+    void ToggleDrawer()
+    {
+        isNavigationMenuOpen = !isNavigationMenuOpen;
+    }
+}

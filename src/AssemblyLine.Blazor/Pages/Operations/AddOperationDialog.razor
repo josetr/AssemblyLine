@@ -1,0 +1,32 @@
+﻿@inherits ContextComponentBase<ViewModels.Operations.AddOperationDialogViewModel>;
+
+<MudDialog Class="dialog-responsive">
+    <DialogContent>
+        <EditForm Model="Model.Operation" OnValidSubmit="Submit">
+            <DataAnnotationsValidator />
+            <MudTextField Label="Name" Variant="Variant.Text" @bind-Value="Model.Operation.Name" For="(() => Model.Operation.Name)" />
+            <MudNumericField Label="Order" Variant="Variant.Text" @bind-Value="Model.Operation.Order" For="(() => Model.Operation.Order)" />
+            <MudSelect Label="Device" Variant="Variant.Text" @bind-Value="Model.Operation.Device" For="(() => Model.Operation.Device)">
+                @foreach (var device in Model.Devices)
+                {
+                    <MudSelectItem T="Device" Value="device">@device.Name</MudSelectItem>
+                }
+            </MudSelect>
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" ButtonType="ButtonType.Submit" FullWidth="true">Submit</MudButton>
+            <MudText Color="Color.Error">
+                <AdditionalErrors @ref="Model.AdditionalErrors" />
+            </MudText>
+        </EditForm>
+    </DialogContent>
+</MudDialog>
+
+@code {
+    [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = default!;
+
+    private async Task Submit()
+    {
+        var operation = await Model.SubmitAsync();
+        if (operation != null)
+            MudDialog.Close(DialogResult.Ok(operation));
+    }
+}
